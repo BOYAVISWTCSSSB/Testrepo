@@ -96,6 +96,7 @@ def simulate_transfer(
     destination_account_id: str,
     amount: Decimal = Query(gt=0),
 ):
+
     """Check whether a mock transfer could be made; this never moves or changes money."""
     source = require_account(source_account_id)
     destination = require_account(destination_account_id)

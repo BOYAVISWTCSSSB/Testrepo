@@ -1,21 +1,13 @@
-"""SSB Bank POC MCP server: converts the banking FastAPI app into MCP tools.
-Transport: streamable HTTP at http://127.0.0.1:8001/mcp (no stdio)."""
-# NOTE: do not leave a local file named `azure.py` in the project root because it
-# shadows the official Azure SDK package (`azure.identity`, `azure.storage.blob`).
 import logging, os, time
 from pathlib import Path
-
 from dotenv import load_dotenv
 from azure.identity import DefaultAzureCredential
 from azure.storage.blob import BlobServiceClient
 from fastmcp import FastMCP
 from fastmcp.server.middleware import Middleware
 from starlette.responses import PlainTextResponse
-
 from api_app import app as banking_api
-
 load_dotenv(Path(__file__).resolve().parent / ".env")
-
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("mcp")
 
@@ -114,4 +106,4 @@ async def health(request):
 if __name__ == "__main__":
     #mcp.run(transport="http", host="127.0.0.1", port=8000)
     port = int(os.getenv("PORT",os.getenv("WEBSITES_PORT","8000")))
-    mcp.run(transport="http",host="0.0.0.0",port = port,Path="/mcp")
+    mcp.run(transport="http",host="0.0.0.0",port = port,path="/mcp")
